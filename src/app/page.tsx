@@ -17,7 +17,7 @@ export default function Home() {
         </div>
 
         {/* Features Section with Unequal Boxes */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 mt-16">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 mt-16 border-2 rounded-lg rounded-xl border-transparent bg-[#171717] p-10">
           {/* Left Box - Smaller */}
           <div className="md:col-span-3 p-6 rounded-xl shadow-md transform hover:translate-y-1 transition-all duration-300 border" style={{ backgroundColor: '#6603BF', borderColor: '#C6FC7B' }}>
             <div className="p-3 rounded-full w-12 h-12 flex items-center justify-center mb-4" style={{ backgroundColor: '#C6FC7B' }}>
@@ -77,7 +77,7 @@ export default function Home() {
         </div>
 
         {/* How It Works Section */}
-        <div className="mt-24 p-8 rounded-xl " style={{ backgroundColor: '#122B1B', marginLeft: '-1rem', marginRight: '-1rem' }}>
+        <div className="mt-24 p-8 rounded-xl" style={{ backgroundColor: '#122B1B', marginLeft: '-1rem', marginRight: '-1rem' }}>
           <div className="container mx-auto px-4">
             <h2 className="text-3xl font-bold text-center mb-10" style={{ color: '#C6FC7B' }}>
               How 1inch Works

@@ -121,7 +121,7 @@ export default function LaunchPage() {
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold mb-2" style={{ color: '#0D2818' }}>1inch Trading Platform</h1>
           <p className="text-lg" style={{ color: '#0D2818' }}>Advanced DEX trading with AI-powered insights and CLOB technology</p>
-          <Badge variant="secondary" className="mt-2" style={{ backgroundColor: '#6603BF', color: '#C6FC7B' }}>
+          <Badge variant="secondary" className="mt-2 text-xl" style={{ backgroundColor: '#6603BF', color: '#C6FC7B' }}>
             Powered by 1inch DEX Aggregator
           </Badge>
         </div>
@@ -345,36 +345,40 @@ export default function LaunchPage() {
         </div>
 
         {/* Features */}
-        <div className="mt-8 grid md:grid-cols-3 gap-6">
-          <Card style={{ backgroundColor: '#7CE8A5', borderColor: '#08130C' }}>
-            <CardContent className="p-6 text-center">
-              <Zap className="h-8 w-8 mx-auto mb-3" style={{ color: '#08130C' }} />
-              <h3 className="font-semibold mb-2" style={{ color: '#08130C' }}>DEX Aggregation</h3>
-              <p className="text-sm" style={{ color: '#08130C' }}>
-                Access liquidity from hundreds of DEXes across multiple chains with optimal routing
-              </p>
-            </CardContent>
-          </Card>
+        <div className="mt-8">
+          <div className="p-8 rounded-xl" style={{ backgroundColor: '#122B1B', borderColor: '#C6FC7B', borderWidth: '1px' }}>
+            <div className="grid md:grid-cols-3 gap-8">
+              <Card style={{ backgroundColor: '#7CE8A5', borderColor: '#08130C' }}>
+                <CardContent className="p-8 text-center">
+                  <Zap className="h-12 w-12 mx-auto mb-4" style={{ color: '#08130C' }} />
+                  <h3 className="text-xl font-semibold mb-3" style={{ color: '#08130C' }}>DEX Aggregation</h3>
+                  <p className="text-base" style={{ color: '#08130C' }}>
+                    Access liquidity from hundreds of DEXes across multiple chains with optimal routing
+                  </p>
+                </CardContent>
+              </Card>
 
-          <Card style={{ backgroundColor: '#C6FC7B', borderColor: '#122B1B' }}>
-            <CardContent className="p-6 text-center">
-              <Shield className="h-8 w-8 mx-auto mb-3" style={{ color: '#122B1B' }} />
-              <h3 className="font-semibold mb-2" style={{ color: '#122B1B' }}>CLOB Technology</h3>
-              <p className="text-sm" style={{ color: '#122B1B' }}>
-                Professional-grade trading with Central Limit Order Book for advanced order management
-              </p>
-            </CardContent>
-          </Card>
+              <Card style={{ backgroundColor: '#C6FC7B', borderColor: '#122B1B' }}>
+                <CardContent className="p-8 text-center">
+                  <Shield className="h-12 w-12 mx-auto mb-4" style={{ color: '#122B1B' }} />
+                  <h3 className="text-xl font-semibold mb-3" style={{ color: '#122B1B' }}>CLOB Technology</h3>
+                  <p className="text-base" style={{ color: '#122B1B' }}>
+                    Professional-grade trading with Central Limit Order Book for advanced order management
+                  </p>
+                </CardContent>
+              </Card>
 
-          <Card style={{ backgroundColor: '#ECEFEC', borderColor: '#08130C' }}>
-            <CardContent className="p-6 text-center">
-              <Globe className="h-8 w-8 mx-auto mb-3" style={{ color: '#08130C' }} />
-              <h3 className="font-semibold mb-2" style={{ color: '#08130C' }}>Cross-Chain</h3>
-              <p className="text-sm" style={{ color: '#08130C' }}>
-                Trade seamlessly across multiple blockchains with unified interface and settlement
-              </p>
-            </CardContent>
-          </Card>
+              <Card style={{ backgroundColor: '#ECEFEC', borderColor: '#08130C' }}>
+                <CardContent className="p-8 text-center">
+                  <Globe className="h-12 w-12 mx-auto mb-4" style={{ color: '#08130C' }} />
+                  <h3 className="text-xl font-semibold mb-3" style={{ color: '#08130C' }}>Cross-Chain</h3>
+                  <p className="text-base" style={{ color: '#08130C' }}>
+                    Trade seamlessly across multiple blockchains with unified interface and settlement
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
         </div>
       </div>
     </div>
