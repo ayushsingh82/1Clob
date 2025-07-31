@@ -14,13 +14,6 @@ export default function Home() {
           <p className="text-xl mb-8 max-w-3xl mx-auto" style={{ color: '#0D2818' }}>
             1inch brings the power of decentralized exchanges to the next level — no intermediaries, no hidden fees, just pure DeFi trading with CLOB technology.
           </p>
-          
-          {/* CTA Buttons */}
-          <div className="flex flex-wrap justify-center gap-4 mb-12">
-            <button className="px-6 py-3 rounded-lg shadow-lg transition transform hover:scale-105" style={{ backgroundColor: '#6603BF', color: '#C6FC7B' }}>
-              Connect Wallet
-            </button>
-          </div>
         </div>
 
         {/* Features Section with Unequal Boxes */}
@@ -84,69 +77,73 @@ export default function Home() {
         </div>
 
         {/* How It Works Section */}
-        <div className="mt-24 p-8 rounded-xl" style={{ backgroundColor: '#122B1B' }}>
-          <h2 className="text-3xl font-bold text-center mb-10" style={{ color: '#C6FC7B' }}>
-            How 1inch Works
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            <div className="p-6 rounded-xl shadow-md hover:shadow-lg transition-all border-l-4" style={{ backgroundColor: '#7CE8A5', borderColor: '#08130C' }}>
-              <div className="w-10 h-10 rounded-full flex items-center justify-center text-xl font-bold mb-4" style={{ backgroundColor: '#08130C', color: '#7CE8A5' }}>1</div>
-              <h4 className="text-lg font-semibold mb-2" style={{ color: '#08130C' }}>
-                Order Discovery
-              </h4>
-              <p style={{ color: '#08130C' }}>
-                Scan hundreds of DEXes to find the best prices and liquidity for your trades.
-              </p>
-            </div>
-            
-            <div className="p-6 rounded-xl shadow-md hover:shadow-lg transition-all mt-4 md:mt-0 border-l-4" style={{ backgroundColor: '#C6FC7B', borderColor: '#122B1B' }}>
-              <div className="w-10 h-10 rounded-full flex items-center justify-center text-xl font-bold mb-4" style={{ backgroundColor: '#122B1B', color: '#C6FC7B' }}>2</div>
-              <h4 className="text-lg font-semibold mb-2" style={{ color: '#122B1B' }}>
-                Route Optimization
-              </h4>
-              <p style={{ color: '#122B1B' }}>
-                Our algorithm calculates the optimal route across multiple DEXes to minimize fees and maximize execution efficiency.
-              </p>
-            </div>
-            
-            <div className="p-6 rounded-xl shadow-md hover:shadow-lg transition-all mt-4 md:mt-8 border-l-4" style={{ backgroundColor: '#ECEFEC', borderColor: '#08130C' }}>
-              <div className="w-10 h-10 rounded-full flex items-center justify-center text-xl font-bold mb-4" style={{ backgroundColor: '#08130C', color: '#ECEFEC' }}>3</div>
-              <h4 className="text-lg font-semibold mb-2" style={{ color: '#08130C' }}>
-                CLOB Execution
-              </h4>
-              <p style={{ color: '#08130C' }}>
-                Execute trades using advanced Central Limit Order Book technology for professional-grade trading experience.
-              </p>
-            </div>
-            
-            <div className="p-6 rounded-xl shadow-md hover:shadow-lg transition-all mt-4 md:mt-16 border-l-4" style={{ backgroundColor: '#ECEFEC', borderColor: '#08130C' }}>
-              <div className="w-10 h-10 rounded-full flex items-center justify-center text-xl font-bold mb-4" style={{ backgroundColor: '#08130C', color: '#ECEFEC' }}>4</div>
-              <h4 className="text-lg font-semibold mb-2" style={{ color: '#08130C' }}>
-                Settlement
-              </h4>
-              <p style={{ color: '#08130C' }}>
-                Instant settlement across multiple DEXes with atomic transactions and comprehensive transaction protection.
-              </p>
+        <div className="mt-24 p-8 rounded-xl" style={{ backgroundColor: '#122B1B', marginLeft: '-1rem', marginRight: '-1rem' }}>
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl font-bold text-center mb-10" style={{ color: '#C6FC7B' }}>
+              How 1inch Works
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+              <div className="p-6 rounded-xl shadow-md hover:shadow-lg transition-all border-l-4" style={{ backgroundColor: '#7CE8A5', borderColor: '#08130C' }}>
+                <div className="w-10 h-10 rounded-full flex items-center justify-center text-xl font-bold mb-4" style={{ backgroundColor: '#08130C', color: '#7CE8A5' }}>1</div>
+                <h4 className="text-lg font-semibold mb-2" style={{ color: '#08130C' }}>
+                  Order Discovery
+                </h4>
+                <p style={{ color: '#08130C' }}>
+                  Scan hundreds of DEXes to find the best prices and liquidity for your trades.
+                </p>
+              </div>
+              
+              <div className="p-6 rounded-xl shadow-md hover:shadow-lg transition-all mt-4 md:mt-0 border-l-4" style={{ backgroundColor: '#C6FC7B', borderColor: '#122B1B' }}>
+                <div className="w-10 h-10 rounded-full flex items-center justify-center text-xl font-bold mb-4" style={{ backgroundColor: '#122B1B', color: '#C6FC7B' }}>2</div>
+                <h4 className="text-lg font-semibold mb-2" style={{ color: '#122B1B' }}>
+                  Route Optimization
+                </h4>
+                <p style={{ color: '#122B1B' }}>
+                  Our algorithm calculates the optimal route across multiple DEXes to minimize fees and maximize execution efficiency.
+                </p>
+              </div>
+              
+              <div className="p-6 rounded-xl shadow-md hover:shadow-lg transition-all mt-4 md:mt-8 border-l-4" style={{ backgroundColor: '#ECEFEC', borderColor: '#08130C' }}>
+                <div className="w-10 h-10 rounded-full flex items-center justify-center text-xl font-bold mb-4" style={{ backgroundColor: '#08130C', color: '#ECEFEC' }}>3</div>
+                <h4 className="text-lg font-semibold mb-2" style={{ color: '#08130C' }}>
+                  CLOB Execution
+                </h4>
+                <p style={{ color: '#08130C' }}>
+                  Execute trades using advanced Central Limit Order Book technology for professional-grade trading experience.
+                </p>
+              </div>
+              
+              <div className="p-6 rounded-xl shadow-md hover:shadow-lg transition-all mt-4 md:mt-16 border-l-4" style={{ backgroundColor: '#7CE8A5', borderColor: '#08130C' }}>
+                <div className="w-10 h-10 rounded-full flex items-center justify-center text-xl font-bold mb-4" style={{ backgroundColor: '#08130C', color: '#7CE8A5' }}>4</div>
+                <h4 className="text-lg font-semibold mb-2" style={{ color: '#08130C' }}>
+                  Settlement
+                </h4>
+                <p style={{ color: '#08130C' }}>
+                  Instant settlement across multiple DEXes with atomic transactions and comprehensive transaction protection.
+                </p>
+              </div>
             </div>
           </div>
         </div>
         
         {/* Benefits Section */}
-        <div className="mt-24 p-10 shadow-xl" style={{ backgroundColor: '#6603BF' }}>
-          <div className="text-center">
-            <h2 className="text-3xl font-bold mb-10" style={{ color: '#C6FC7B' }}>Why Choose 1inch?</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="p-6 rounded-xl shadow" style={{ backgroundColor: '#C6FC7B' }}>
-                <h3 className="text-xl font-semibold mb-3" style={{ color: '#6603BF' }}>Best Prices</h3>
-                <p style={{ color: '#0D2818' }}>Always get the best prices across hundreds of DEXes</p>
-              </div>
-              <div className="p-6 rounded-xl shadow" style={{ backgroundColor: '#C6FC7B' }}>
-                <h3 className="text-xl font-semibold mb-3" style={{ color: '#6603BF' }}>Low Fees</h3>
-                <p style={{ color: '#0D2818' }}>Minimize gas costs and trading fees with smart routing</p>
-              </div>
-              <div className="p-6 rounded-xl shadow" style={{ backgroundColor: '#C6FC7B' }}>
-                <h3 className="text-xl font-semibold mb-3" style={{ color: '#6603BF' }}>CLOB Technology</h3>
-                <p style={{ color: '#0D2818' }}>Professional-grade trading with Central Limit Order Book</p>
+        <div className="mt-24 p-10 shadow-xl rounded-xl" style={{ backgroundColor: '#6603BF', marginLeft: '-1rem', marginRight: '-1rem' }}>
+          <div className="container mx-auto px-4">
+            <div className="text-center">
+              <h2 className="text-3xl font-bold mb-10" style={{ color: '#C6FC7B' }}>Why Choose 1inch?</h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="p-6 rounded-xl shadow" style={{ backgroundColor: '#7CE8A5' }}>
+                  <h3 className="text-xl font-semibold mb-3" style={{ color: '#08130C' }}>Best Prices</h3>
+                  <p style={{ color: '#08130C' }}>Always get the best prices across hundreds of DEXes</p>
+                </div>
+                <div className="p-6 rounded-xl shadow" style={{ backgroundColor: '#C6FC7B' }}>
+                  <h3 className="text-xl font-semibold mb-3" style={{ color: '#122B1B' }}>Low Fees</h3>
+                  <p style={{ color: '#122B1B' }}>Minimize gas costs and trading fees with smart routing</p>
+                </div>
+                <div className="p-6 rounded-xl shadow" style={{ backgroundColor: '#ECEFEC' }}>
+                  <h3 className="text-xl font-semibold mb-3" style={{ color: '#08130C' }}>CLOB Technology</h3>
+                  <p style={{ color: '#08130C' }}>Professional-grade trading with Central Limit Order Book</p>
+                </div>
               </div>
             </div>
           </div>
