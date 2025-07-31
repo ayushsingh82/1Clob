@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Alert } from "@/components/ui/alert";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TrendingUp, TrendingDown, Brain, Target, AlertTriangle, CheckCircle, Zap, Shield, Globe, RefreshCw, DollarSign, BarChart3, Activity, Settings, Key } from "lucide-react";
-import { fetchCryptoData, generateMockData, type CryptoData, type APIResponse, TOKEN_ID_MAP } from "@/lib/crypto-apis";
+import { fetchCryptoData, generateMockData, type CryptoData, type APIResponse, TOKEN_ID_MAP, testCryptoCompareAPI } from "@/lib/crypto-apis";
 
 export default function TryPage() {
   const [tokenSymbol, setTokenSymbol] = useState('BTC');
@@ -119,6 +119,21 @@ export default function TryPage() {
     }
   };
 
+  const handleTestCryptoCompare = async () => {
+    try {
+      console.log('🧪 Testing CryptoCompare API...');
+      const isWorking = await testCryptoCompareAPI();
+      if (isWorking) {
+        alert('✅ CryptoCompare API is working! Check console for details.');
+      } else {
+        alert('❌ CryptoCompare API test failed. Check console for details.');
+      }
+    } catch (error) {
+      console.error('Test failed:', error);
+      alert('❌ CryptoCompare API test failed. Check console for details.');
+    }
+  };
+
   const handleTokenInput = (value: string) => {
     const cleanValue = value.toUpperCase().replace(/[^A-Z0-9]/g, '');
     setTokenSymbol(cleanValue);
@@ -188,10 +203,9 @@ export default function TryPage() {
                 Data Configuration
               </div>
               <Button
-                variant="outline"
                 size="sm"
                 onClick={() => setShowApiSettings(!showApiSettings)}
-                style={{ borderColor: '#C6FC7B', color: '#C6FC7B' }}
+                style={{ borderColor: '#C6FC7B', color: '#C6FC7B', border: '1px solid' }}
               >
                 <Settings className="h-4 w-4 mr-2" />
                 API Settings
@@ -231,22 +245,27 @@ export default function TryPage() {
                 </div>
                 <div className="flex items-center gap-4">
                   <Button
-                    variant="outline"
                     size="sm"
                     onClick={() => setUseRealAPIs(true)}
                     className={useRealAPIs ? 'bg-blue-100' : ''}
-                    style={{ borderColor: '#122B1B', color: '#122B1B' }}
+                    style={{ borderColor: '#122B1B', color: '#122B1B', border: '1px solid' }}
                   >
                     Use Real APIs
                   </Button>
                   <Button
-                    variant="outline"
                     size="sm"
                     onClick={() => setUseRealAPIs(false)}
                     className={!useRealAPIs ? 'bg-blue-100' : ''}
-                    style={{ borderColor: '#122B1B', color: '#122B1B' }}
+                    style={{ borderColor: '#122B1B', color: '#122B1B', border: '1px solid' }}
                   >
                     Use Mock Data
+                  </Button>
+                  <Button
+                    size="sm"
+                    onClick={handleTestCryptoCompare}
+                    style={{ backgroundColor: '#6603BF', color: '#C6FC7B' }}
+                  >
+                    Test CryptoCompare
                   </Button>
                 </div>
               </div>
