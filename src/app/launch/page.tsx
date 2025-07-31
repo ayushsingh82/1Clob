@@ -116,39 +116,39 @@ export default function LaunchPage() {
   }
 
   return (
-    <div className="min-h-screen bg-black p-4">
+    <div className="min-h-screen p-4" style={{ backgroundColor: '#C6FC7B' }}>
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2">1inch Trading Platform</h1>
-          <p className="text-lg text-gray-300">Advanced DEX trading with AI-powered insights and CLOB technology</p>
-          <Badge variant="secondary" className="mt-2 bg-blue-600 text-white">
+          <h1 className="text-4xl font-bold mb-2" style={{ color: '#0D2818' }}>1inch Trading Platform</h1>
+          <p className="text-lg" style={{ color: '#0D2818' }}>Advanced DEX trading with AI-powered insights and CLOB technology</p>
+          <Badge variant="secondary" className="mt-2" style={{ backgroundColor: '#6603BF', color: '#C6FC7B' }}>
             Powered by 1inch DEX Aggregator
           </Badge>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-6">
           {/* Order Form */}
-          <Card className="bg-gray-900 border-gray-800">
+          <Card style={{ backgroundColor: '#122B1B', borderColor: '#C6FC7B' }}>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-white">
-                <Target className="h-5 w-5 text-blue-400" />
+              <CardTitle className="flex items-center gap-2" style={{ color: '#C6FC7B' }}>
+                <Target className="h-5 w-5" style={{ color: '#C6FC7B' }} />
                 Place Limit Order
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               {/* Market Info */}
-              <div className="bg-gray-800 p-4 rounded-lg">
+              <div className="p-4 rounded-lg" style={{ backgroundColor: '#ECEFEC' }}>
                 <div className="flex justify-between items-center mb-2">
-                  <span className="font-semibold text-lg text-white">{marketData.symbol}</span>
+                  <span className="font-semibold text-lg" style={{ color: '#122B1B' }}>{marketData.symbol}</span>
                   <div className="text-right">
-                    <div className="text-2xl font-bold text-white">${marketData.currentPrice.toLocaleString()}</div>
-                    <div className={`text-sm ${marketData.change24h >= 0 ? "text-green-400" : "text-red-400"}`}>
+                    <div className="text-2xl font-bold" style={{ color: '#122B1B' }}>${marketData.currentPrice.toLocaleString()}</div>
+                    <div className={`text-sm ${marketData.change24h >= 0 ? "text-green-600" : "text-red-600"}`}>
                       {marketData.change24h >= 0 ? "+" : ""}
                       {marketData.change24h}%
                     </div>
                   </div>
                 </div>
-                <div className="grid grid-cols-2 gap-4 text-sm text-gray-400">
+                <div className="grid grid-cols-2 gap-4 text-sm" style={{ color: '#122B1B' }}>
                   <div>24H High: ${marketData.high24h.toLocaleString()}</div>
                   <div>24H Low: ${marketData.low24h.toLocaleString()}</div>
                 </div>
@@ -156,13 +156,13 @@ export default function LaunchPage() {
 
               {/* Order Type */}
               <div>
-                <Label className="text-white">Order Type</Label>
+                <Label style={{ color: '#C6FC7B' }}>Order Type</Label>
                 <Tabs value={orderType} onValueChange={(value) => setOrderType(value as "buy" | "sell")}>
-                  <TabsList className="grid w-full grid-cols-2 bg-gray-800">
-                    <TabsTrigger value="buy" className="text-green-400 data-[state=active]:bg-green-600 data-[state=active]:text-white">
+                  <TabsList className="grid w-full grid-cols-2" style={{ backgroundColor: '#ECEFEC' }}>
+                    <TabsTrigger value="buy" className="text-green-600 data-[state=active]:bg-green-600 data-[state=active]:text-white">
                       Buy
                     </TabsTrigger>
-                    <TabsTrigger value="sell" className="text-red-400 data-[state=active]:bg-red-600 data-[state=active]:text-white">
+                    <TabsTrigger value="sell" className="text-red-600 data-[state=active]:bg-red-600 data-[state=active]:text-white">
                       Sell
                     </TabsTrigger>
                   </TabsList>
@@ -171,33 +171,36 @@ export default function LaunchPage() {
 
               {/* Amount */}
               <div>
-                <Label htmlFor="amount" className="text-white">Amount (ETH)</Label>
+                <Label htmlFor="amount" style={{ color: '#C6FC7B' }}>Amount (ETH)</Label>
                 <Input
                   id="amount"
                   type="number"
                   placeholder="0.0"
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
-                  className="bg-gray-800 border-gray-700 text-white placeholder-gray-400"
+                  className="border-gray-700 placeholder-gray-400"
+                  style={{ backgroundColor: '#ECEFEC', color: '#122B1B' }}
                 />
               </div>
 
               {/* Price */}
               <div>
-                <Label htmlFor="price" className="text-white">Limit Price (USDC)</Label>
+                <Label htmlFor="price" style={{ color: '#C6FC7B' }}>Limit Price (USDC)</Label>
                 <Input
                   id="price"
                   type="number"
                   placeholder="0.0"
                   value={price}
                   onChange={(e) => setPrice(e.target.value)}
-                  className="bg-gray-800 border-gray-700 text-white placeholder-gray-400"
+                  className="border-gray-700 placeholder-gray-400"
+                  style={{ backgroundColor: '#ECEFEC', color: '#122B1B' }}
                 />
               </div>
 
               <Button
                 onClick={handlePlaceOrder}
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                className="w-full text-white"
+                style={{ backgroundColor: '#C6FC7B', color: '#122B1B' }}
                 size="lg"
                 disabled={!amount || !price || isAnalyzing}
               >
@@ -207,29 +210,29 @@ export default function LaunchPage() {
           </Card>
 
           {/* AI Analysis */}
-          <Card className="bg-gray-900 border-gray-800">
+          <Card style={{ backgroundColor: '#122B1B', borderColor: '#C6FC7B' }}>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-white">
-                <Brain className="h-5 w-5 text-purple-400" />
+              <CardTitle className="flex items-center gap-2" style={{ color: '#C6FC7B' }}>
+                <Brain className="h-5 w-5" style={{ color: '#C6FC7B' }} />
                 AI Trading Assistant
                 {isAnalyzing && (
                   <div className="ml-auto">
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-purple-400"></div>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2" style={{ borderColor: '#C6FC7B' }}></div>
                   </div>
                 )}
               </CardTitle>
             </CardHeader>
             <CardContent>
               {!price ? (
-                <div className="text-center py-8 text-gray-400">
-                  <Brain className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                <div className="text-center py-8" style={{ color: '#C6FC7B' }}>
+                  <Brain className="h-12 w-12 mx-auto mb-4 opacity-50" style={{ color: '#C6FC7B' }} />
                   <p>Enter a limit price to get AI-powered suggestions</p>
                 </div>
               ) : isAnalyzing ? (
                 <div className="text-center py-8">
                   <div className="animate-pulse">
-                    <Brain className="h-12 w-12 mx-auto mb-4 text-purple-400" />
-                    <p className="text-gray-400">Analyzing market conditions...</p>
+                    <Brain className="h-12 w-12 mx-auto mb-4" style={{ color: '#C6FC7B' }} />
+                    <p style={{ color: '#C6FC7B' }}>Analyzing market conditions...</p>
                   </div>
                 </div>
               ) : aiAnalysis ? (
@@ -238,32 +241,33 @@ export default function LaunchPage() {
                   <Alert
                     className={`border-l-4 ${
                       aiAnalysis.suggestion === "buy"
-                        ? "border-green-500 bg-green-900/20"
+                        ? "border-green-500"
                         : aiAnalysis.suggestion === "sell"
-                          ? "border-red-500 bg-red-900/20"
-                          : "border-yellow-500 bg-yellow-900/20"
+                          ? "border-red-500"
+                          : "border-yellow-500"
                     }`}
+                    style={{ backgroundColor: '#ECEFEC' }}
                   >
                     <div className="flex items-center gap-2">
                       {aiAnalysis.suggestion === "buy" ? (
-                        <TrendingUp className="h-4 w-4 text-green-400" />
+                        <TrendingUp className="h-4 w-4 text-green-600" />
                       ) : (
-                        <TrendingDown className="h-4 w-4 text-red-400" />
+                        <TrendingDown className="h-4 w-4 text-red-600" />
                       )}
-                      <span className="font-semibold text-white">AI Suggests: {aiAnalysis.suggestion.toUpperCase()}</span>
-                      <Badge variant="outline" className="text-white border-gray-600">{Math.round(aiAnalysis.confidence)}% confidence</Badge>
+                      <span className="font-semibold" style={{ color: '#122B1B' }}>AI Suggests: {aiAnalysis.suggestion.toUpperCase()}</span>
+                      <Badge variant="outline" style={{ color: '#122B1B', borderColor: '#122B1B' }}>{Math.round(aiAnalysis.confidence)}% confidence</Badge>
                     </div>
                   </Alert>
 
                   {/* Suggested Price */}
-                  <div className="bg-blue-900/20 p-4 rounded-lg border border-blue-800">
+                  <div className="p-4 rounded-lg border" style={{ backgroundColor: '#ECEFEC', borderColor: '#122B1B' }}>
                     <div className="flex items-center justify-between">
-                      <span className="font-medium text-white">Suggested Price:</span>
-                      <span className="text-xl font-bold text-blue-400">
+                      <span className="font-medium" style={{ color: '#122B1B' }}>Suggested Price:</span>
+                      <span className="text-xl font-bold" style={{ color: '#6603BF' }}>
                         ${aiAnalysis.suggestedPrice.toLocaleString()}
                       </span>
                     </div>
-                    <p className="text-sm text-gray-400 mt-1">
+                    <p className="text-sm mt-1" style={{ color: '#122B1B' }}>
                       {Math.abs(Number.parseFloat(price) - aiAnalysis.suggestedPrice) > 1
                         ? `Consider adjusting by $${Math.abs(Number.parseFloat(price) - aiAnalysis.suggestedPrice).toFixed(2)}`
                         : "Your price looks good!"}
@@ -272,28 +276,29 @@ export default function LaunchPage() {
 
                   {/* Technical Indicators */}
                   <div className="grid grid-cols-2 gap-3 text-sm">
-                    <div className="bg-gray-800 p-3 rounded">
-                      <div className="font-medium text-white">Support</div>
-                      <div className="text-green-400">${aiAnalysis.technicalIndicators.support}</div>
+                    <div className="p-3 rounded" style={{ backgroundColor: '#ECEFEC' }}>
+                      <div className="font-medium" style={{ color: '#122B1B' }}>Support</div>
+                      <div className="text-green-600">${aiAnalysis.technicalIndicators.support}</div>
                     </div>
-                    <div className="bg-gray-800 p-3 rounded">
-                      <div className="font-medium text-white">Resistance</div>
-                      <div className="text-red-400">${aiAnalysis.technicalIndicators.resistance}</div>
+                    <div className="p-3 rounded" style={{ backgroundColor: '#ECEFEC' }}>
+                      <div className="font-medium" style={{ color: '#122B1B' }}>Resistance</div>
+                      <div className="text-red-600">${aiAnalysis.technicalIndicators.resistance}</div>
                     </div>
-                    <div className="bg-gray-800 p-3 rounded">
-                      <div className="font-medium text-white">EMA-50</div>
-                      <div className="text-gray-300">${aiAnalysis.technicalIndicators.ema50}</div>
+                    <div className="p-3 rounded" style={{ backgroundColor: '#ECEFEC' }}>
+                      <div className="font-medium" style={{ color: '#122B1B' }}>EMA-50</div>
+                      <div style={{ color: '#122B1B' }}>${aiAnalysis.technicalIndicators.ema50}</div>
                     </div>
-                    <div className="bg-gray-800 p-3 rounded">
-                      <div className="font-medium text-white">RSI</div>
+                    <div className="p-3 rounded" style={{ backgroundColor: '#ECEFEC' }}>
+                      <div className="font-medium" style={{ color: '#122B1B' }}>RSI</div>
                       <div
                         className={
                           aiAnalysis.technicalIndicators.rsi > 70
-                            ? "text-red-400"
+                            ? "text-red-600"
                             : aiAnalysis.technicalIndicators.rsi < 30
-                              ? "text-green-400"
-                              : "text-gray-300"
+                              ? "text-green-600"
+                              : ""
                         }
+                        style={aiAnalysis.technicalIndicators.rsi <= 70 && aiAnalysis.technicalIndicators.rsi >= 30 ? { color: '#122B1B' } : {}}
                       >
                         {aiAnalysis.technicalIndicators.rsi}
                       </div>
@@ -304,30 +309,31 @@ export default function LaunchPage() {
                   <div
                     className={`p-3 rounded-lg ${
                       aiAnalysis.riskLevel === "low"
-                        ? "bg-green-900/20 border border-green-800"
+                        ? "border-green-800"
                         : aiAnalysis.riskLevel === "medium"
-                          ? "bg-yellow-900/20 border border-yellow-800"
-                          : "bg-red-900/20 border border-red-800"
+                          ? "border-yellow-800"
+                          : "border-red-800"
                     }`}
+                    style={{ backgroundColor: '#ECEFEC', borderWidth: '1px' }}
                   >
                     <div className="flex items-center gap-2">
                       {aiAnalysis.riskLevel === "low" ? (
-                        <CheckCircle className="h-4 w-4 text-green-400" />
+                        <CheckCircle className="h-4 w-4 text-green-600" />
                       ) : (
-                        <AlertTriangle className="h-4 w-4 text-yellow-400" />
+                        <AlertTriangle className="h-4 w-4 text-yellow-600" />
                       )}
-                      <span className="font-medium text-white">Risk Level: {aiAnalysis.riskLevel.toUpperCase()}</span>
+                      <span className="font-medium" style={{ color: '#122B1B' }}>Risk Level: {aiAnalysis.riskLevel.toUpperCase()}</span>
                     </div>
                   </div>
 
                   {/* AI Reasoning */}
                   <div>
-                    <h4 className="font-medium mb-2 text-white">AI Analysis:</h4>
+                    <h4 className="font-medium mb-2" style={{ color: '#C6FC7B' }}>AI Analysis:</h4>
                     <ul className="space-y-1 text-sm">
                       {aiAnalysis.reasoning.map((reason, index) => (
                         <li key={index} className="flex items-start gap-2">
-                          <span className="text-purple-400 mt-1">•</span>
-                          <span className="text-gray-300">{reason}</span>
+                          <span className="mt-1" style={{ color: '#ECEFEC' }}>•</span>
+                          <span style={{ color: '#ECEFEC' }}>{reason}</span>
                         </li>
                       ))}
                     </ul>
@@ -340,31 +346,31 @@ export default function LaunchPage() {
 
         {/* Features */}
         <div className="mt-8 grid md:grid-cols-3 gap-6">
-          <Card className="bg-gray-900 border-gray-800">
+          <Card style={{ backgroundColor: '#7CE8A5', borderColor: '#08130C' }}>
             <CardContent className="p-6 text-center">
-              <Zap className="h-8 w-8 mx-auto mb-3 text-blue-400" />
-              <h3 className="font-semibold mb-2 text-white">DEX Aggregation</h3>
-              <p className="text-sm text-gray-400">
+              <Zap className="h-8 w-8 mx-auto mb-3" style={{ color: '#08130C' }} />
+              <h3 className="font-semibold mb-2" style={{ color: '#08130C' }}>DEX Aggregation</h3>
+              <p className="text-sm" style={{ color: '#08130C' }}>
                 Access liquidity from hundreds of DEXes across multiple chains with optimal routing
               </p>
             </CardContent>
           </Card>
 
-          <Card className="bg-gray-900 border-gray-800">
+          <Card style={{ backgroundColor: '#C6FC7B', borderColor: '#122B1B' }}>
             <CardContent className="p-6 text-center">
-              <Shield className="h-8 w-8 mx-auto mb-3 text-green-400" />
-              <h3 className="font-semibold mb-2 text-white">CLOB Technology</h3>
-              <p className="text-sm text-gray-400">
+              <Shield className="h-8 w-8 mx-auto mb-3" style={{ color: '#122B1B' }} />
+              <h3 className="font-semibold mb-2" style={{ color: '#122B1B' }}>CLOB Technology</h3>
+              <p className="text-sm" style={{ color: '#122B1B' }}>
                 Professional-grade trading with Central Limit Order Book for advanced order management
               </p>
             </CardContent>
           </Card>
 
-          <Card className="bg-gray-900 border-gray-800">
+          <Card style={{ backgroundColor: '#ECEFEC', borderColor: '#08130C' }}>
             <CardContent className="p-6 text-center">
-              <Globe className="h-8 w-8 mx-auto mb-3 text-purple-400" />
-              <h3 className="font-semibold mb-2 text-white">Cross-Chain</h3>
-              <p className="text-sm text-gray-400">
+              <Globe className="h-8 w-8 mx-auto mb-3" style={{ color: '#08130C' }} />
+              <h3 className="font-semibold mb-2" style={{ color: '#08130C' }}>Cross-Chain</h3>
+              <p className="text-sm" style={{ color: '#08130C' }}>
                 Trade seamlessly across multiple blockchains with unified interface and settlement
               </p>
             </CardContent>

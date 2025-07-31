@@ -77,7 +77,7 @@ export default function Home() {
         </div>
 
         {/* How It Works Section */}
-        <div className="mt-24 p-8 rounded-xl" style={{ backgroundColor: '#122B1B', marginLeft: '-1rem', marginRight: '-1rem' }}>
+        <div className="mt-24 p-8 rounded-xl " style={{ backgroundColor: '#122B1B', marginLeft: '-1rem', marginRight: '-1rem' }}>
           <div className="container mx-auto px-4">
             <h2 className="text-3xl font-bold text-center mb-10" style={{ color: '#C6FC7B' }}>
               How 1inch Works
