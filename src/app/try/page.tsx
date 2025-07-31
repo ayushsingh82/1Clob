@@ -8,28 +8,8 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Alert } from "@/components/ui/alert";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { TrendingUp, TrendingDown, Brain, Target, AlertTriangle, CheckCircle, Zap, Shield, Globe, RefreshCw, DollarSign, BarChart3, Activity } from "lucide-react";
-
-interface CryptoData {
-  timestamp: number;
-  date: string;
-  price: string;
-  volume?: number;
-  market_cap?: number;
-  open?: string;
-  high?: string;
-  low?: string;
-  close?: string;
-}
-
-interface APIResponse {
-  token: string;
-  days: number;
-  timestamp: string;
-  data: {
-    [key: string]: CryptoData[] | { error: string };
-  };
-}
+import { TrendingUp, TrendingDown, Brain, Target, AlertTriangle, CheckCircle, Zap, Shield, Globe, RefreshCw, DollarSign, BarChart3, Activity, Settings, Key } from "lucide-react";
+import { fetchCryptoData, generateMockData, type CryptoData, type APIResponse, TOKEN_ID_MAP } from "@/lib/crypto-apis";
 
 export default function TryPage() {
   const [tokenSymbol, setTokenSymbol] = useState('BTC');
@@ -38,9 +18,41 @@ export default function TryPage() {
   const [cryptoData, setCryptoData] = useState<APIResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState('overview');
+  const [useRealAPIs, setUseRealAPIs] = useState(true);
+  const [apiKeys, setApiKeys] = useState({
+    coinMarketCap: '',
+    finnhub: '',
+    alphaVantage: '',
+    taapiIO: '',
+    twelveData: ''
+  });
+  const [showApiSettings, setShowApiSettings] = useState(false);
 
-  // Mock API functions (in real app, these would call your backend)
-  const fetchCryptoData = async () => {
+  // Real API function
+  const fetchRealCryptoData = async () => {
+    setIsLoading(true);
+    setError(null);
+    
+    try {
+      console.log(`🔍 Fetching data for ${tokenSymbol} for ${days} days`);
+      
+      // Filter out empty API keys
+      const validApiKeys = Object.fromEntries(
+        Object.entries(apiKeys).filter(([_, value]) => value.trim() !== '')
+      );
+      
+      const data = await fetchCryptoData(tokenSymbol, days, validApiKeys);
+      setCryptoData(data);
+    } catch (err) {
+      console.error('API Error:', err);
+      setError(err instanceof Error ? err.message : 'Failed to fetch crypto data');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Mock API function (fallback)
+  const fetchMockCryptoData = async () => {
     setIsLoading(true);
     setError(null);
     
@@ -48,59 +60,69 @@ export default function TryPage() {
       // Simulate API call delay
       await new Promise(resolve => setTimeout(resolve, 2000));
       
-      // Mock data structure
+      // Generate mock data for different APIs
+      const basePrice = getBasePriceForToken(tokenSymbol);
       const mockData: APIResponse = {
         token: tokenSymbol,
         days: days,
         timestamp: new Date().toISOString(),
         data: {
-          coinGecko: generateMockData(days, 2456.78, 0.05),
-          cryptoCompare: generateMockData(days, 2456.78, 0.03),
-          // Add more mock APIs as needed
+          coinGecko: generateMockData(days, basePrice, 0.05),
+          cryptoCompare: generateMockData(days, basePrice, 0.03),
+          coinMarketCap: generateMockData(days, basePrice, 0.04),
+          finnhub: generateMockData(days, basePrice, 0.06),
+          alphaVantage: generateMockData(days, basePrice, 0.02),
+          taapiIO: generateMockData(days, basePrice, 0.07),
+          twelveData: generateMockData(days, basePrice, 0.05)
         }
       };
       
       setCryptoData(mockData);
     } catch (err) {
-      setError('Failed to fetch crypto data');
+      setError('Failed to generate mock data');
     } finally {
       setIsLoading(false);
     }
   };
 
-  const generateMockData = (days: number, basePrice: number, volatility: number): CryptoData[] => {
-    const data: CryptoData[] = [];
-    const now = new Date();
-    
-    for (let i = days - 1; i >= 0; i--) {
-      const date = new Date(now);
-      date.setDate(date.getDate() - i);
-      
-      const randomChange = (Math.random() - 0.5) * volatility;
-      const price = basePrice * (1 + randomChange);
-      const high = price * (1 + Math.random() * 0.02);
-      const low = price * (1 - Math.random() * 0.02);
-      const open = price * (1 + (Math.random() - 0.5) * 0.01);
-      
-      data.push({
-        timestamp: date.getTime(),
-        date: date.toISOString().split('T')[0],
-        price: price.toFixed(6),
-        volume: Math.random() * 1000000 + 500000,
-        market_cap: Math.random() * 1000000000 + 500000000,
-        open: open.toFixed(6),
-        high: high.toFixed(6),
-        low: low.toFixed(6),
-        close: price.toFixed(6)
-      });
-    }
-    
-    return data;
+  const getBasePriceForToken = (token: string): number => {
+    const priceMap: Record<string, number> = {
+      'BTC': 45000,
+      'ETH': 2800,
+      'USDC': 1.00,
+      'USDT': 1.00,
+      'BNB': 320,
+      'ADA': 0.45,
+      'SOL': 95,
+      'DOT': 7.5,
+      'DOGE': 0.08,
+      'AVAX': 35,
+      'MATIC': 0.85,
+      'LINK': 15,
+      'UNI': 7.2,
+      'LTC': 75,
+      'XRP': 0.55,
+      'BCH': 240,
+      'ATOM': 8.5,
+      'NEAR': 3.2,
+      'FTM': 0.35,
+      'ALGO': 0.18
+    };
+    return priceMap[token.toUpperCase()] || 100;
   };
 
-  useEffect(() => {
-    fetchCryptoData();
-  }, []);
+  const handleFetchData = () => {
+    if (useRealAPIs) {
+      fetchRealCryptoData();
+    } else {
+      fetchMockCryptoData();
+    }
+  };
+
+  const handleTokenInput = (value: string) => {
+    const cleanValue = value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+    setTokenSymbol(cleanValue);
+  };
 
   const getLatestPrice = (data: CryptoData[]) => {
     if (!data || data.length === 0) return null;
@@ -127,6 +149,25 @@ export default function TryPage() {
     return `$${num.toFixed(2)}`;
   };
 
+  const getApiStatus = (apiName: string, data: CryptoData[] | { error: string }) => {
+    if ('error' in data) {
+      return { status: 'error', message: data.error };
+    }
+    if (Array.isArray(data) && data.length > 0) {
+      return { status: 'success', message: `${data.length} data points` };
+    }
+    return { status: 'warning', message: 'No data available' };
+  };
+
+  useEffect(() => {
+    // Auto-fetch on component mount
+    if (useRealAPIs) {
+      fetchRealCryptoData();
+    } else {
+      fetchMockCryptoData();
+    }
+  }, []);
+
   return (
     <div className="min-h-screen p-4" style={{ backgroundColor: '#C6FC7B' }}>
       <div className="max-w-7xl mx-auto">
@@ -141,22 +182,89 @@ export default function TryPage() {
         {/* Controls */}
         <Card style={{ backgroundColor: '#122B1B', borderColor: '#C6FC7B' }} className="mb-6">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2" style={{ color: '#C6FC7B' }}>
-              <Target className="h-5 w-5" style={{ color: '#C6FC7B' }} />
-              Data Configuration
+            <CardTitle className="flex items-center justify-between" style={{ color: '#C6FC7B' }}>
+              <div className="flex items-center gap-2">
+                <Target className="h-5 w-5" style={{ color: '#C6FC7B' }} />
+                Data Configuration
+              </div>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setShowApiSettings(!showApiSettings)}
+                style={{ borderColor: '#C6FC7B', color: '#C6FC7B' }}
+              >
+                <Settings className="h-4 w-4 mr-2" />
+                API Settings
+              </Button>
             </CardTitle>
           </CardHeader>
           <CardContent>
+            {showApiSettings && (
+              <div className="mb-6 p-4 rounded-lg" style={{ backgroundColor: '#ECEFEC' }}>
+                <div className="flex items-center gap-2 mb-4">
+                  <Key className="h-4 w-4" style={{ color: '#122B1B' }} />
+                  <h4 className="font-medium" style={{ color: '#122B1B' }}>API Configuration</h4>
+                </div>
+                <div className="grid md:grid-cols-2 gap-4 mb-4">
+                  <div>
+                    <Label style={{ color: '#122B1B' }}>CoinMarketCap API Key</Label>
+                    <Input
+                      type="password"
+                      value={apiKeys.coinMarketCap}
+                      onChange={(e) => setApiKeys(prev => ({ ...prev, coinMarketCap: e.target.value }))}
+                      placeholder="Optional"
+                      className="border-gray-700 placeholder-gray-400"
+                      style={{ backgroundColor: '#ECEFEC', color: '#122B1B' }}
+                    />
+                  </div>
+                  <div>
+                    <Label style={{ color: '#122B1B' }}>Finnhub API Key</Label>
+                    <Input
+                      type="password"
+                      value={apiKeys.finnhub}
+                      onChange={(e) => setApiKeys(prev => ({ ...prev, finnhub: e.target.value }))}
+                      placeholder="Optional"
+                      className="border-gray-700 placeholder-gray-400"
+                      style={{ backgroundColor: '#ECEFEC', color: '#122B1B' }}
+                    />
+                  </div>
+                </div>
+                <div className="flex items-center gap-4">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setUseRealAPIs(true)}
+                    className={useRealAPIs ? 'bg-blue-100' : ''}
+                    style={{ borderColor: '#122B1B', color: '#122B1B' }}
+                  >
+                    Use Real APIs
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setUseRealAPIs(false)}
+                    className={!useRealAPIs ? 'bg-blue-100' : ''}
+                    style={{ borderColor: '#122B1B', color: '#122B1B' }}
+                  >
+                    Use Mock Data
+                  </Button>
+                </div>
+              </div>
+            )}
+
             <div className="grid md:grid-cols-3 gap-4">
               <div>
                 <Label style={{ color: '#C6FC7B' }}>Token Symbol</Label>
                 <Input
                   value={tokenSymbol}
-                  onChange={(e) => setTokenSymbol(e.target.value.toUpperCase())}
+                  onChange={(e) => handleTokenInput(e.target.value)}
                   placeholder="BTC"
                   className="border-gray-700 placeholder-gray-400"
                   style={{ backgroundColor: '#ECEFEC', color: '#122B1B' }}
                 />
+                <p className="text-xs mt-1" style={{ color: '#C6FC7B' }}>
+                  Supported: BTC, ETH, USDC, SOL, ADA, DOT, DOGE, AVAX, MATIC, LINK, UNI, LTC, XRP, BCH, ATOM, NEAR, FTM, ALGO
+                </p>
               </div>
               <div>
                 <Label style={{ color: '#C6FC7B' }}>Days</Label>
@@ -165,13 +273,15 @@ export default function TryPage() {
                   value={days}
                   onChange={(e) => setDays(parseInt(e.target.value) || 7)}
                   placeholder="7"
+                  min="1"
+                  max="365"
                   className="border-gray-700 placeholder-gray-400"
                   style={{ backgroundColor: '#ECEFEC', color: '#122B1B' }}
                 />
               </div>
               <div className="flex items-end">
                 <Button
-                  onClick={fetchCryptoData}
+                  onClick={handleFetchData}
                   disabled={isLoading}
                   className="w-full"
                   style={{ backgroundColor: '#C6FC7B', color: '#122B1B' }}
@@ -205,6 +315,8 @@ export default function TryPage() {
             {/* Overview Cards */}
             <div className="grid md:grid-cols-4 gap-6 mb-6">
               {Object.entries(cryptoData.data).map(([apiName, data]) => {
+                const status = getApiStatus(apiName, data);
+                
                 if (Array.isArray(data) && data.length > 0) {
                   const latest = getLatestPrice(data);
                   const { change, percentChange } = getPriceChange(data);
@@ -216,8 +328,14 @@ export default function TryPage() {
                           <h3 className="font-semibold" style={{ color: '#C6FC7B' }}>
                             {apiName.replace(/([A-Z])/g, ' $1').trim()}
                           </h3>
-                          <Badge variant="outline" style={{ color: '#C6FC7B', borderColor: '#C6FC7B' }}>
-                            {data.length} points
+                          <Badge 
+                            variant="outline" 
+                            style={{ 
+                              color: status.status === 'success' ? '#C6FC7B' : '#ff6b6b',
+                              borderColor: status.status === 'success' ? '#C6FC7B' : '#ff6b6b'
+                            }}
+                          >
+                            {status.message}
                           </Badge>
                         </div>
                         <div className="text-2xl font-bold mb-1" style={{ color: '#C6FC7B' }}>
@@ -228,6 +346,24 @@ export default function TryPage() {
                         </div>
                         <div className="text-xs mt-1" style={{ color: '#C6FC7B' }}>
                           {latest!.date}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  );
+                } else if ('error' in data) {
+                  return (
+                    <Card key={apiName} style={{ backgroundColor: '#6603BF', borderColor: '#ff6b6b' }}>
+                      <CardContent className="p-6">
+                        <div className="flex items-center justify-between mb-2">
+                          <h3 className="font-semibold" style={{ color: '#C6FC7B' }}>
+                            {apiName.replace(/([A-Z])/g, ' $1').trim()}
+                          </h3>
+                          <Badge variant="outline" style={{ color: '#ff6b6b', borderColor: '#ff6b6b' }}>
+                            Error
+                          </Badge>
+                        </div>
+                        <div className="text-sm" style={{ color: '#ff6b6b' }}>
+                          {data.error}
                         </div>
                       </CardContent>
                     </Card>
@@ -305,6 +441,7 @@ export default function TryPage() {
                         <table className="w-full" style={{ backgroundColor: '#ECEFEC' }}>
                           <thead>
                             <tr style={{ backgroundColor: '#122B1B' }}>
+                              <th className="p-2 text-left" style={{ color: '#C6FC7B' }}>API</th>
                               <th className="p-2 text-left" style={{ color: '#C6FC7B' }}>Date</th>
                               <th className="p-2 text-left" style={{ color: '#C6FC7B' }}>Open</th>
                               <th className="p-2 text-left" style={{ color: '#C6FC7B' }}>High</th>
@@ -316,8 +453,9 @@ export default function TryPage() {
                           <tbody>
                             {Object.entries(cryptoData.data).map(([apiName, data]) => {
                               if (Array.isArray(data) && data.length > 0) {
-                                return data.slice(-5).map((item, index) => (
+                                return data.slice(-3).map((item, index) => (
                                   <tr key={`${apiName}-${index}`} className="border-b border-gray-300">
+                                    <td className="p-2 font-medium" style={{ color: '#122B1B' }}>{apiName}</td>
                                     <td className="p-2" style={{ color: '#122B1B' }}>{item.date}</td>
                                     <td className="p-2" style={{ color: '#122B1B' }}>${item.open || item.price}</td>
                                     <td className="p-2" style={{ color: '#122B1B' }}>${item.high || item.price}</td>
