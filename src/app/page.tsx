@@ -119,7 +119,7 @@ export default function Home() {
         </div>
 
         {/* How It Works Section - Full Width Background */}
-        <div className="-mx-[100vw] px-[100vw] py-12 mb-0" style={{ backgroundColor: '#122B1B' }}>
+        <div className="-mx-[100vw] px-[100vw] py-12 " style={{ backgroundColor: '#122B1B' }}>
           <div className="container mx-auto">
             <h2 className="text-4xl font-bold text-center mb-12" style={{ color: '#C6FC7B' }}>
               How 1inch Works
@@ -163,6 +163,28 @@ export default function Home() {
                 <p className="text-sm leading-relaxed" style={{ color: '#08130C' }}>
                   Instant settlement across multiple DEXes with atomic transactions and comprehensive transaction protection.
                 </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Getting Started Section - Full Width Background */}
+        <div className="py-16 mt-[50px] w-[800px] h-[280px] mx-auto border-2 border-transparent rounded-2xl" style={{ backgroundColor: '#6603BF' }}>
+          <div className="container mx-auto px-8">
+            <div className="text-center">
+              <div className="mb-12 mt-8">
+                <h2 className="text-3xl font-bold mb-4" style={{ color: '#C6FC7B' }}>Get Ready to Start with 1inch</h2>
+                <p className="text-sm leading-relaxed mb-6" style={{ color: '#C6FC7B' }}>
+                  Get started with 1inch today and experience the future of decentralized trading.
+                </p>
+                <div className="flex justify-center gap-4">
+                  <button className="bg-white text-black px-6 py-3 rounded-md font-semibold hover:bg-gray-100 transition-colors">
+                    Try Launcher
+                  </button>
+                  <button className="bg-[#C6FC7B] text-[#122B1B] px-6 py-3 rounded-md font-semibold hover:bg-[#B5E86A] transition-colors">
+                    Get Started
+                  </button>
+                </div>
               </div>
             </div>
           </div>

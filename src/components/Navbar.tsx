@@ -19,8 +19,8 @@ const Navbar = () => {
             <div className="hidden md:flex items-center space-x-8">
           
           
-              <Link href="/features" className="transition-colors hover:opacity-80" style={{ color: '#C6FC7B' }}>
-                Features
+              <Link href="/swagger" className="transition-colors hover:opacity-80" style={{ color: '#C6FC7B' }}>
+                Swagger
               </Link>
               <Link href="/try" className="transition-colors hover:opacity-80" style={{ color: '#C6FC7B' }}>
                 try
