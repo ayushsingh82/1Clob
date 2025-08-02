@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "1inch - DeFi Aggregator",
-  description: "The most efficient way to swap tokens across multiple DEXes in one transaction.",
+  title: "1Clob ",
+  description: "The most efficient way to find the best trade",
 };
 
 export default function RootLayout({

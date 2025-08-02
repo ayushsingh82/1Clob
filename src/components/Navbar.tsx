@@ -11,7 +11,7 @@ const Navbar = () => {
             {/* Logo/Brand */}
             <div className="flex items-center">
               <Link href="/" className="flex items-center">
-                <span className="text-xl font-bold" style={{ color: '#C6FC7B' }}>1inch</span>
+                <span className="text-xl font-bold" style={{ color: '#C6FC7B' }}>1Clob</span>
               </Link>
             </div>
 
@@ -22,8 +22,8 @@ const Navbar = () => {
               <Link href="/swagger" className="transition-colors hover:opacity-80" style={{ color: '#C6FC7B' }}>
                 Swagger
               </Link>
-              <Link href="/try" className="transition-colors hover:opacity-80" style={{ color: '#C6FC7B' }}>
-                try
+              <Link href="/price" className="transition-colors hover:opacity-80" style={{ color: '#C6FC7B' }}>
+                Price
               </Link>
             </div>
 

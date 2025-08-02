@@ -9,10 +9,10 @@ export default function Home() {
       <div className="flex-grow container mx-auto px-4 pt-16 pb-8" style={{ backgroundColor: '#C6FC7B' }}>
         <div className="text-center">
           <h1 className="text-6xl font-bold mb-6 mt-[60px]" style={{ color: '#0D2818' }}>
-            1inch — The Future of DEX Trading
+            1Clob — The Future of Trading
           </h1>
           <p className="text-xl mb-8 max-w-3xl mx-auto leading-relaxed" style={{ color: '#0D2818' }}>
-            1inch brings the power of decentralized exchanges to the next level — no intermediaries, no hidden fees, just pure DeFi trading with CLOB technology.
+          An AI-powered trading assistant built on 1inch CLOB tech — helping you book more profits and cut your losses with smarter entries and exits.
           </p>
         </div>
 
@@ -92,8 +92,8 @@ export default function Home() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
                     </svg>
                   </div>
-                  <h3 className="text-xl font-bold mb-3 transform hover:translate-y-1 transition-transform duration-300" style={{ color: '#08130C' }}>Best Prices</h3>
-                  <p className="text-sm leading-relaxed" style={{ color: '#08130C' }}>Always get the best prices across hundreds of DEXes</p>
+                  <h3 className="text-xl font-bold mb-3 transform hover:translate-y-1 transition-transform duration-300" style={{ color: '#08130C' }}>Best Trades</h3>
+                  <p className="text-sm leading-relaxed" style={{ color: '#08130C' }}>Always get the best trades </p>
                 </div>
                 <div className="p-6 rounded-2xl shadow-2xl transform hover:scale-110 hover:rotate-2 transition-all duration-500 bg-[#C6FC7B]">
                   <div className="w-12 h-12 rounded-full flex items-center justify-center mb-4 mx-auto shadow-lg transform hover:rotate-12 transition-transform duration-300" style={{ backgroundColor: '#08130C' }}>
@@ -101,9 +101,9 @@ export default function Home() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                     </svg>
                   </div>
-                  <h3 className="text-xl font-bold mb-3 transform hover:translate-y-1 transition-transform duration-300" style={{ color: '#08130C' }}>Low Fees</h3>
-                  <p className="text-sm leading-relaxed" style={{ color: '#08130C' }}>Minimize gas costs and trading fees with smart routing</p>
-                </div>
+                  <h3 className="text-xl font-bold mb-3 transform hover:translate-y-1 transition-transform duration-300" style={{ color: '#08130C' }}>AI Trade Analysis</h3>
+                    <p className="text-sm leading-relaxed" style={{ color: '#08130C' }}>Helps you to book maximum profit </p>
+                  </div>
                 <div className="p-6 rounded-2xl shadow-2xl transform hover:scale-110 hover:rotate-2 transition-all duration-500 bg-gradient-to-br from-gray-200 to-gray-300">
                   <div className="w-12 h-12 rounded-full flex items-center justify-center mb-4 mx-auto shadow-lg transform hover:rotate-12 transition-transform duration-300" style={{ backgroundColor: '#08130C' }}>
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" style={{ color: '#ECEFEC' }}>
@@ -111,7 +111,7 @@ export default function Home() {
                     </svg>
                   </div>
                   <h3 className="text-xl font-bold mb-3 transform hover:translate-y-1 transition-transform duration-300" style={{ color: '#08130C' }}>CLOB Technology</h3>
-                  <p className="text-sm leading-relaxed" style={{ color: '#08130C' }}>Professional-grade trading with Central Limit Order Book</p>
+                  <p className="text-sm leading-relaxed" style={{ color: '#08130C' }}>Powered by 1inch CLOB tech</p>
                 </div>
               </div>
             </div>
@@ -122,46 +122,46 @@ export default function Home() {
         <div className="-mx-[100vw] px-[100vw] py-12 " style={{ backgroundColor: '#122B1B' }}>
           <div className="container mx-auto">
             <h2 className="text-4xl font-bold text-center mb-12" style={{ color: '#C6FC7B' }}>
-              How 1inch Works
+              How 1Clob Works
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
               <div className="p-6 rounded-2xl shadow-2xl hover:shadow-3xl transform hover:scale-105 hover:-translate-y-2 transition-all duration-500 border-l-8 bg-[#C6FC7B]" style={{ borderColor: '#08130C' }}>
                 <div className="w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mb-4 shadow-lg transform hover:rotate-360 transition-transform duration-700" style={{ backgroundColor: '#08130C', color: '#7CE8A5' }}>1</div>
                 <h4 className="text-lg font-bold mb-3 transform hover:translate-x-2 transition-transform duration-300" style={{ color: '#08130C' }}>
-                  Order Discovery
+                Smart Trade Placement
                 </h4>
                 <p className="text-sm leading-relaxed" style={{ color: '#08130C' }}>
-                  Scan hundreds of DEXes to find the best prices and liquidity for your trades.
+                When you select a token, our AI instantly scans the chart to highlight key support and resistance zones, giving you clarity before you place a trade.
                 </p>
               </div>
               
               <div className="p-6 rounded-2xl shadow-2xl hover:shadow-3xl transform hover:scale-105 hover:-translate-y-2 transition-all duration-500 mt-4 md:mt-8 border-l-8 bg-gradient-to-br from-green-300 to-green-400" style={{ borderColor: '#122B1B' }}>
                 <div className="w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mb-4 shadow-lg transform hover:rotate-360 transition-transform duration-700" style={{ backgroundColor: '#122B1B', color: '#C6FC7B' }}>2</div>
                 <h4 className="text-lg font-bold mb-3 transform hover:translate-x-2 transition-transform duration-300" style={{ color: '#122B1B' }}>
-                  Route Optimization
+                Signal-Backed Execution
                 </h4>
                 <p className="text-sm leading-relaxed" style={{ color: '#122B1B' }}>
-                  Our algorithm calculates the optimal route across multiple DEXes to minimize fees and maximize execution efficiency.
+                Based on real-time data and historical trends, the engine suggests entry points, stop-loss, and take-profit levels for optimized trading decisions.
                 </p>
               </div>
               
               <div className="p-6 rounded-2xl shadow-2xl hover:shadow-3xl transform hover:scale-105 hover:-translate-y-2 transition-all duration-500 mt-4 md:mt-16 border-l-8 bg-gradient-to-br from-gray-200 to-gray-300" style={{ borderColor: '#08130C' }}>
                 <div className="w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mb-4 shadow-lg transform hover:rotate-360 transition-transform duration-700" style={{ backgroundColor: '#08130C', color: '#ECEFEC' }}>3</div>
                 <h4 className="text-lg font-bold mb-3 transform hover:translate-x-2 transition-transform duration-300" style={{ color: '#08130C' }}>
-                  CLOB Execution
+                Live Trade Tracking
                 </h4>
                 <p className="text-sm leading-relaxed" style={{ color: '#08130C' }}>
-                  Execute trades using advanced Central Limit Order Book technology for professional-grade trading experience.
+                Once your trade is active, the system monitors price movement, updating your dashboard with real-time status and position health.
                 </p>
               </div>
               
               <div className="p-6 rounded-2xl shadow-2xl hover:shadow-3xl transform hover:scale-105 hover:-translate-y-2 transition-all duration-500 mt-4 md:mt-24 border-l-8 bg-[#C6FC7B]" style={{ borderColor: '#08130C' }}>
                 <div className="w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mb-4 shadow-lg transform hover:rotate-360 transition-transform duration-700" style={{ backgroundColor: '#08130C', color: '#7CE8A5' }}>4</div>
                 <h4 className="text-lg font-bold mb-3 transform hover:translate-x-2 transition-transform duration-300" style={{ color: '#08130C' }}>
-                  Settlement
+                Proactive Alerts & Risk Management
                 </h4>
                 <p className="text-sm leading-relaxed" style={{ color: '#08130C' }}>
-                  Instant settlement across multiple DEXes with atomic transactions and comprehensive transaction protection.
+                Get instant alerts when price nears critical levels, with optional automation to adjust stop-loss or close trades based on AI signals.
                 </p>
               </div>
             </div>
@@ -173,9 +173,9 @@ export default function Home() {
           <div className="container mx-auto px-8">
             <div className="text-center">
               <div className="mb-12 mt-8">
-                <h2 className="text-3xl font-bold mb-4" style={{ color: '#C6FC7B' }}>Get Ready to Start with 1inch</h2>
+                <h2 className="text-3xl font-bold mb-4" style={{ color: '#C6FC7B' }}>Get Ready to Start with 1Clob</h2>
                 <p className="text-sm leading-relaxed mb-6" style={{ color: '#C6FC7B' }}>
-                  Get started with 1inch today and experience the future of decentralized trading.
+                  Get started with 1Clob today and book the maximum profit  .
                 </p>
                 <div className="flex justify-center gap-4">
                   <button className="bg-white text-black px-6 py-3 rounded-md font-semibold hover:bg-gray-100 transition-colors">
