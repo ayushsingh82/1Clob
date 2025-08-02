@@ -535,46 +535,7 @@ export default function TryPage() {
           </>
         )}
 
-        {/* API Information */}
-        <div className="mt-8">
-          <div className="p-8 rounded-xl" style={{ backgroundColor: '#171717', borderColor: '#C6FC7B', borderWidth: '1px' }}>
-            <div className="container mx-auto px-4">
-              <h2 className="text-2xl font-bold mb-6 text-center" style={{ color: '#C6FC7B' }}>Supported APIs</h2>
-              <div className="grid md:grid-cols-3 gap-6">
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-4" style={{ color: '#C6FC7B' }}>Free APIs</h3>
-                  <ul className="space-y-2" style={{ color: '#ECEFEC' }}>
-                    <li>• CoinGecko API</li>
-                    <li>• CryptoCompare API</li>
-                    <li>• TradingView Widgets</li>
-                  </ul>
-                </div>
-
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-4" style={{ color: '#C6FC7B' }}>Professional APIs</h3>
-                  <ul className="space-y-2" style={{ color: '#ECEFEC' }}>
-                    <li>• CoinMarketCap API</li>
-                    <li>• Finnhub API</li>
-                    <li>• Alpha Vantage API</li>
-                    <li>• TaapiIO API</li>
-                    <li>• Twelve Data API</li>
-                  </ul>
-                </div>
-
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-4" style={{ color: '#C6FC7B' }}>Features</h3>
-                  <ul className="space-y-2" style={{ color: '#ECEFEC' }}>
-                    <li>• Historical price data</li>
-                    <li>• Technical indicators</li>
-                    <li>• Volume analysis</li>
-                    <li>• Market cap data</li>
-                    <li>• Real-time quotes</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        {/* API Information section removed */}
       </div>
     </div>
   );

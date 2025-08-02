@@ -209,39 +209,8 @@ export default function LaunchPage() {
     await fetchTokenData(tokenSymbol)
   }
 
-  // Simulate AI analysis when price changes
-  useEffect(() => {
-    if (price && Number.parseFloat(price) > 0) {
-      setIsAnalyzing(true)
-
-      // Simulate API call delay
-      setTimeout(() => {
-        const targetPrice = Number.parseFloat(price)
-        const currentPrice = marketData.currentPrice
-
-        // Mock AI analysis based on price input
-        const analysis: AIAnalysis = {
-          suggestion: targetPrice < currentPrice ? "buy" : "sell",
-          confidence: Math.random() * 40 + 60, // 60-100%
-          suggestedPrice: generateSuggestedPrice(targetPrice, currentPrice),
-          reasoning: generateReasoning(targetPrice, currentPrice),
-          technicalIndicators: {
-            support: currentPrice * 0.985,
-            resistance: currentPrice * 1.015,
-            ema50: currentPrice * 0.995,
-            ema200: currentPrice * 0.975,
-            rsi: 67.5,
-          },
-          riskLevel: Math.abs(targetPrice - currentPrice) / currentPrice > 0.05 ? "high" : "medium",
-        }
-
-        setAiAnalysis(analysis)
-        setIsAnalyzing(false)
-      }, 1500)
-    } else {
-      setAiAnalysis(null)
-    }
-  }, [price, marketData.currentPrice, selectedToken]) // Added selectedToken as dependency
+  // Simulate AI analysis when buy button is clicked (removed old useEffect)
+  // AI analysis now triggers only when handlePlaceOrder is called
 
   const generateSuggestedPrice = (targetPrice: number, currentPrice: number): number => {
     const diff = Math.abs(targetPrice - currentPrice)
@@ -272,18 +241,48 @@ export default function LaunchPage() {
   }
 
   const handlePlaceOrder = () => {
+    // Trigger AI analysis when buy button is clicked
+    if (amount && Number.parseFloat(amount) > 0) {
+      setIsAnalyzing(true)
+
+      // Simulate API call delay
+      setTimeout(() => {
+        const orderAmount = Number.parseFloat(amount)
+        const currentPrice = marketData.currentPrice
+
+        // Generate AI analysis based on order amount and current market
+        const analysis: AIAnalysis = {
+          suggestion: orderAmount > 0 ? "buy" : "hold",
+          confidence: Math.random() * 40 + 60, // 60-100%
+          suggestedPrice: generateSuggestedPrice(currentPrice, currentPrice),
+          reasoning: generateReasoning(currentPrice, currentPrice),
+          technicalIndicators: {
+            support: currentPrice * 0.985,
+            resistance: currentPrice * 1.015,
+            ema50: currentPrice * 0.995,
+            ema200: currentPrice * 0.975,
+            rsi: 67.5,
+          },
+          riskLevel: "medium",
+        }
+
+        setAiAnalysis(analysis)
+        setIsAnalyzing(false)
+      }, 1500)
+    }
+
     // In real app, this would integrate with 1inch Limit Order API
-    alert("Order placed successfully! (Demo mode)")
+    alert("Buy order placed successfully! (Demo mode)")
   }
 
   return (
     <div className="min-h-screen p-4" style={{ backgroundColor: '#C6FC7B' }}>
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold mb-2" style={{ color: '#0D2818' }}>1inch Trading Platform</h1>
-          <p className="text-lg" style={{ color: '#0D2818' }}>Advanced DEX trading with AI-powered insights and CLOB technology</p>
+          <h1 className="text-4xl font-bold mb-2" style={{ color: '#0D2818' }}>1Clob</h1>
+          <p className="text-lg" style={{ color: '#0D2818' }}>Advanced DEX trading experience with AI-powered insights and CLOB technology</p>
           <Badge variant="secondary" className="mt-2 text-xl" style={{ backgroundColor: '#6603BF', color: '#C6FC7B' }}>
-            Powered by 1inch DEX Aggregator
+            Powered by 1inch clob apis
           </Badge>
         </div>
 
@@ -419,7 +418,7 @@ export default function LaunchPage() {
 
                   {/* Amount */}
                   <div>
-                    <Label htmlFor="amount" style={{ color: '#C6FC7B' }}>Amount ({selectedToken})</Label>
+                    <Label htmlFor="amount" style={{ color: '#C6FC7B' }}>Price ({selectedToken})</Label>
                     <Input
                       id="amount"
                       type="number"
@@ -471,10 +470,10 @@ export default function LaunchPage() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  {!price ? (
+                  {!aiAnalysis && !isAnalyzing ? (
                     <div className="text-center py-8" style={{ color: '#C6FC7B' }}>
                       <Brain className="h-12 w-12 mx-auto mb-4 opacity-50" style={{ color: '#C6FC7B' }} />
-                      <p>Enter a limit price to get AI-powered suggestions</p>
+                      <p>Click "Place Buy Order" to get AI-powered analysis</p>
                     </div>
                   ) : isAnalyzing ? (
                     <div className="text-center py-8">
@@ -517,7 +516,7 @@ export default function LaunchPage() {
 
                       {/* Suggested Price */}
                       <div className="p-3 rounded-lg" style={{ backgroundColor: '#ECEFEC' }}>
-                        <div className="text-sm font-medium mb-1" style={{ color: '#122B1B' }}>Suggested Price</div>
+                        <div className="text-sm font-medium mb-1" style={{ color: '#122B1B' }}>Suggested Entry Price</div>
                         <div className="text-lg font-bold" style={{ color: '#122B1B' }}>
                           ${aiAnalysis.suggestedPrice.toFixed(2)}
                         </div>
@@ -569,7 +568,7 @@ export default function LaunchPage() {
 
                       {/* Reasoning */}
                       <div>
-                        <div className="text-sm font-medium mb-2" style={{ color: '#C6FC7B' }}>AI Reasoning</div>
+                        <div className="text-sm font-medium mb-2" style={{ color: '#C6FC7B' }}>AI Analysis</div>
                         <div className="space-y-2">
                           {aiAnalysis.reasoning.map((reason, index) => (
                             <div key={index} className="flex items-start gap-2">
