@@ -28,10 +28,10 @@ export default function Home() {
                   </svg>
                 </div>
                 <h3 className="text-xl font-bold mb-3 transform hover:translate-x-2 transition-transform duration-300" style={{ color: '#C6FC7B' }}>
-                  DEX Aggregation
+                  AI-Powered Trading
                 </h3>
                 <p className="text-LG leading-relaxed" style={{ color: '#C6FC7B' }}>
-                  Access liquidity from hundreds of DEXes across multiple chains. Our aggregation algorithm finds the best routes and lowest fees for your trades.
+                  Advanced AI algorithms analyze market conditions in real-time, providing intelligent buy/sell signals, support/resistance levels, and risk assessment for optimal trading decisions.
                 </p>
               </div>
               
@@ -46,15 +46,15 @@ export default function Home() {
                   CLOB Technology
                 </h3>
                 <p className="text-base leading-relaxed mb-4" style={{ color: '#0D2818' }}>
-                  Advanced Central Limit Order Book technology:<br/>
-                  • Real-time order matching and execution<br/>
-                  • Deep liquidity pools across all major DEXes<br/>
+                  Central Limit Order Book technology powered by 1inch:<br/>
+                  • Real-time order matching with deep liquidity<br/>
                   • MEV protection and fair price discovery<br/>
-                  • Cross-chain order routing and settlement
+                  • Cross-chain order routing and settlement<br/>
+                  • Advanced limit order execution
                 </p>
                 <div className="mt-6">
-                  <Link href="/learn-more" className="inline-flex items-center text-base font-bold px-4 py-2 rounded-xl hover:scale-110 transform transition-all duration-300 shadow-lg" style={{ color: '#C6FC7B', backgroundColor: '#6603BF' }}>
-                    Learn more 
+                  <Link href="/launch" className="inline-flex items-center text-base font-bold px-4 py-2 rounded-xl hover:scale-110 transform transition-all duration-300 shadow-lg" style={{ color: '#C6FC7B', backgroundColor: '#6603BF' }}>
+                    Start Trading 
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
@@ -70,10 +70,10 @@ export default function Home() {
                   </svg>
                 </div>
                 <h3 className="text-xl font-bold mb-3 transform hover:translate-x-2 transition-transform duration-300" style={{ color: '#C6FC7B' }}>
-                  Smart Routing
+                  Market Analysis
                 </h3>
-                <p className="text-lg leading-relaxed" style={{ color: '#C6FC7B' }}>
-                  Intelligent order routing that splits trades across multiple DEXes for optimal execution. Get the best prices while minimizing slippage and gas costs.
+                <p className="text-md leading-relaxed" style={{ color: '#C6FC7B' }}>
+                  Interactive 1inch CLOB API explorer with real-time orderbook data, limit order management, and market depth analysis. Test and integrate with 1inch's Central Limit Order Book APIs directly.
                 </p>
               </div>
             </div>
