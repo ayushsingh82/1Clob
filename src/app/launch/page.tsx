@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge"
 import { Alert } from "@/components/ui/alert"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { TrendingUp, TrendingDown, Brain, Target, AlertTriangle, CheckCircle, Zap, Shield, Globe, Search } from "lucide-react"
+import { fetchCryptoData, TOKEN_ID_MAP } from "@/lib/crypto-apis"
 
 interface AIAnalysis {
   suggestion: "buy" | "sell" | "hold"
@@ -67,29 +68,116 @@ export default function LaunchPage() {
     { symbol: "APT", name: "Aptos" },
   ]
 
-  // Fetch token data from CoinGecko API
-  const fetchTokenData = async (tokenId: string) => {
+  // Fetch token data using the same function as /price page
+  const fetchTokenData = async (tokenSymbol: string) => {
     setIsLoadingToken(true)
     try {
-      const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${tokenId}&vs_currencies=usd&include_24hr_change=true&include_24hr_vol=true&include_24hr_high=true&include_24hr_low=true`)
-      const data = await response.json()
+      console.log(`🔍 Fetching data for ${tokenSymbol} using crypto-apis...`)
       
-      if (data[tokenId]) {
-        const tokenData = data[tokenId]
+      // First, get current market data with 24h high/low from CoinGecko simple API
+      let currentMarketData = null
+      try {
+        const tokenId = TOKEN_ID_MAP[tokenSymbol.toUpperCase()] || tokenSymbol.toLowerCase()
+        const marketResponse = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${tokenId}&vs_currencies=usd&include_24hr_change=true&include_24hr_vol=true&include_24hr_high=true&include_24hr_low=true`)
+        const marketData = await marketResponse.json()
+        currentMarketData = marketData[tokenId]
+        console.log(`📊 Current market data for ${tokenSymbol}:`, currentMarketData)
+      } catch (error) {
+        console.log(`⚠️ Could not fetch current market data for ${tokenSymbol}:`, error)
+      }
+      
+      // Use the same fetchCryptoData function that works in /price page
+      const cryptoData = await fetchCryptoData(tokenSymbol, 7, {})
+      
+      // Extract the latest price from CoinGecko data (most reliable)
+      if (cryptoData.data.coinGecko && Array.isArray(cryptoData.data.coinGecko) && cryptoData.data.coinGecko.length > 0) {
+        const latestData = cryptoData.data.coinGecko[cryptoData.data.coinGecko.length - 1]
+        const previousData = cryptoData.data.coinGecko[cryptoData.data.coinGecko.length - 2]
+        
+        const currentPrice = parseFloat(latestData.price)
+        const previousPrice = previousData ? parseFloat(previousData.price) : currentPrice
+        const change24h = ((currentPrice - previousPrice) / previousPrice) * 100
+        
+        // Use current market data for 24h high/low if available, otherwise calculate from historical data
+        let high24h, low24h
+        if (currentMarketData && currentMarketData.usd_24h_high && currentMarketData.usd_24h_low) {
+          high24h = currentMarketData.usd_24h_high
+          low24h = currentMarketData.usd_24h_low
+          console.log(`✅ Using current market data for 24h high/low: ${low24h} - ${high24h}`)
+        } else {
+          // Fallback: calculate from historical data
+          const allPrices = cryptoData.data.coinGecko.map(d => parseFloat(d.price))
+          high24h = Math.max(...allPrices)
+          low24h = Math.min(...allPrices)
+          console.log(`⚠️ Using historical data for 24h high/low: ${low24h} - ${high24h}`)
+        }
+        
         setMarketData({
-          symbol: `${selectedToken}/USDC`,
-          currentPrice: tokenData.usd,
-          change24h: tokenData.usd_24h_change || 0,
-          volume24h: tokenData.usd_24h_vol || 0,
-          high24h: tokenData.usd_24h_high || tokenData.usd,
-          low24h: tokenData.usd_24h_low || tokenData.usd,
+          symbol: `${tokenSymbol}/USDC`,
+          currentPrice: currentPrice,
+          change24h: change24h,
+          volume24h: latestData.volume || currentMarketData?.usd_24h_vol || 1000000,
+          high24h: high24h,
+          low24h: low24h,
         })
+        
+        console.log(`✅ Successfully fetched ${tokenSymbol} data:`, {
+          price: currentPrice,
+          change: change24h,
+          volume: latestData.volume || currentMarketData?.usd_24h_vol,
+          high: high24h,
+          low: low24h
+        })
+      } else {
+        // Fallback to CryptoCompare data if CoinGecko fails
+        if (cryptoData.data.cryptoCompare && Array.isArray(cryptoData.data.cryptoCompare) && cryptoData.data.cryptoCompare.length > 0) {
+          const latestData = cryptoData.data.cryptoCompare[cryptoData.data.cryptoCompare.length - 1]
+          const currentPrice = parseFloat(latestData.price)
+          
+          // Use current market data for 24h high/low if available
+          let high24h, low24h
+          if (currentMarketData && currentMarketData.usd_24h_high && currentMarketData.usd_24h_low) {
+            high24h = currentMarketData.usd_24h_high
+            low24h = currentMarketData.usd_24h_low
+          } else {
+            // Fallback: calculate from historical data
+            const allPrices = cryptoData.data.cryptoCompare.map(d => parseFloat(d.price))
+            high24h = Math.max(...allPrices)
+            low24h = Math.min(...allPrices)
+          }
+          
+          setMarketData({
+            symbol: `${tokenSymbol}/USDC`,
+            currentPrice: currentPrice,
+            change24h: 0, // CryptoCompare doesn't provide 24h change in this format
+            volume24h: latestData.volume || currentMarketData?.usd_24h_vol || 1000000,
+            high24h: high24h,
+            low24h: low24h,
+          })
+          
+          console.log(`✅ Used CryptoCompare fallback for ${tokenSymbol}:`, {
+            price: currentPrice,
+            high: high24h,
+            low: low24h
+          })
+        } else {
+          // Final fallback to default data
+          console.log(`⚠️ No API data available for ${tokenSymbol}, using default`)
+          setMarketData({
+            symbol: `${tokenSymbol}/USDC`,
+            currentPrice: 100,
+            change24h: 0,
+            volume24h: 1000000,
+            high24h: 110,
+            low24h: 90,
+          })
+        }
       }
     } catch (error) {
       console.error("Error fetching token data:", error)
       // Fallback to default data
       setMarketData({
-        symbol: `${selectedToken}/USDC`,
+        symbol: `${tokenSymbol}/USDC`,
         currentPrice: 100,
         change24h: 0,
         volume24h: 1000000,
@@ -105,8 +193,9 @@ export default function LaunchPage() {
   const handleCustomTokenSubmit = async () => {
     if (customToken.trim()) {
       setSelectedToken(customToken.toUpperCase())
+      setAiAnalysis(null) // Clear AI analysis when token changes
       // Try to fetch data for the custom token
-      await fetchTokenData(customToken.toLowerCase())
+      await fetchTokenData(customToken.toUpperCase())
     }
   }
 
@@ -114,30 +203,10 @@ export default function LaunchPage() {
   const handleTokenSelect = async (tokenSymbol: string) => {
     setSelectedToken(tokenSymbol)
     setCustomToken("")
+    setAiAnalysis(null) // Clear AI analysis when token changes
     
-    // Map common tokens to CoinGecko IDs
-    const tokenIdMap: { [key: string]: string } = {
-      "ETH": "ethereum",
-      "BTC": "bitcoin",
-      "SOL": "solana",
-      "OP": "optimism",
-      "APT": "aptos",
-    }
-    
-    const tokenId = tokenIdMap[tokenSymbol]
-    if (tokenId) {
-      await fetchTokenData(tokenId)
-    } else {
-      // For unknown tokens, use default data
-      setMarketData({
-        symbol: `${tokenSymbol}/USDC`,
-        currentPrice: 100,
-        change24h: 0,
-        volume24h: 1000000,
-        high24h: 110,
-        low24h: 90,
-      })
-    }
+    // Fetch real data using the same method as /price page
+    await fetchTokenData(tokenSymbol)
   }
 
   // Simulate AI analysis when price changes
@@ -172,7 +241,7 @@ export default function LaunchPage() {
     } else {
       setAiAnalysis(null)
     }
-  }, [price, marketData.currentPrice])
+  }, [price, marketData.currentPrice, selectedToken]) // Added selectedToken as dependency
 
   const generateSuggestedPrice = (targetPrice: number, currentPrice: number): number => {
     const diff = Math.abs(targetPrice - currentPrice)
@@ -383,7 +452,7 @@ export default function LaunchPage() {
                     size="lg"
                     disabled={!amount || !price || isAnalyzing}
                   >
-                    {orderType === "buy" ? "Place Buy Order" : "Place Sell Order"}
+                    Place Buy Order
                   </Button>
                 </CardContent>
               </Card>
