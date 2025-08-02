@@ -3,9 +3,13 @@
 import { useState } from 'react';
 
 interface ApiResponse {
-  data: any;
+  data: unknown;
   status: number;
   error?: string;
+}
+
+interface ApiParams {
+  [key: string]: string | number | undefined;
 }
 
 export default function SwaggerPage() {
@@ -44,14 +48,14 @@ export default function SwaggerPage() {
     token: '0x1234567890ABCDEF1234567890ABCDEF12345678'
   });
 
-  const handleApiCall = async (apiName: string, url: string, params?: any) => {
+  const handleApiCall = async (apiName: string, url: string, params?: ApiParams) => {
     setLoading(prev => ({ ...prev, [apiName]: true }));
     try {
       const urlWithParams = new URL(url);
       if (params) {
         Object.keys(params).forEach(key => {
           if (params[key] !== undefined && params[key] !== '') {
-            urlWithParams.searchParams.append(key, params[key].toString());
+            urlWithParams.searchParams.append(key, params[key]!.toString());
           }
         });
       }
@@ -72,20 +76,21 @@ export default function SwaggerPage() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || `HTTP error! status: ${response.status}`);
+        throw new Error((data as { message?: string }).message || `HTTP error! status: ${response.status}`);
       }
 
       setResponses(prev => ({
         ...prev,
         [apiName]: { data, status: response.status }
       }));
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Network error occurred';
       setResponses(prev => ({
         ...prev,
         [apiName]: { 
           data: null, 
           status: 500,
-          error: error.message || 'Network error occurred'
+          error: errorMessage
         }
       }));
     } finally {

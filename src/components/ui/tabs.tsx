@@ -8,7 +8,7 @@ const Tabs = React.forwardRef<
     value?: string
     onValueChange?: (value: string) => void
   }
->(({ className, value, onValueChange, ...props }, ref) => (
+>(({ className, ...props }, ref) => (
   <div
     ref={ref}
     className={cn("", className)}

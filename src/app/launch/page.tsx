@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label"
 import { Badge } from "@/components/ui/badge"
 import { Alert } from "@/components/ui/alert"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { TrendingUp, TrendingDown, Brain, Target, AlertTriangle, CheckCircle, Zap, Shield, Globe, Search } from "lucide-react"
+import { TrendingUp, TrendingDown, Brain, Target, CheckCircle, Shield, Search } from "lucide-react"
 import { fetchCryptoData, TOKEN_ID_MAP } from "@/lib/crypto-apis"
 
 interface AIAnalysis {
@@ -473,7 +473,7 @@ export default function LaunchPage() {
                   {!aiAnalysis && !isAnalyzing ? (
                     <div className="text-center py-8" style={{ color: '#C6FC7B' }}>
                       <Brain className="h-12 w-12 mx-auto mb-4 opacity-50" style={{ color: '#C6FC7B' }} />
-                      <p>Click "Place Buy Order" to get AI-powered analysis</p>
+                      <p>Click &quot;Place Buy Order&quot; to get AI-powered analysis</p>
                     </div>
                   ) : isAnalyzing ? (
                     <div className="text-center py-8">

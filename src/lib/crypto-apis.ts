@@ -24,7 +24,7 @@ export interface APIResponse {
 }
 
 // Utility function to make HTTP requests
-async function makeRequest(url: string, headers: Record<string, string> = {}): Promise<any> {
+async function makeRequest(url: string, headers: Record<string, string> = {}): Promise<unknown> {
   try {
     const response = await fetch(url, { headers });
     
@@ -39,6 +39,19 @@ async function makeRequest(url: string, headers: Record<string, string> = {}): P
   }
 }
 
+// Interface for CoinMarketCap quote data
+interface CoinMarketCapQuote {
+  timestamp: string;
+  quote: {
+    USD: {
+      price: number;
+      volume_24h: number;
+      market_cap: number;
+      percent_change_24h: number;
+    };
+  };
+}
+
 // CoinGecko API - Free tier available
 export class CoinGeckoAPI {
   private baseURL = 'https://api.coingecko.com/api/v3';
@@ -50,12 +63,12 @@ export class CoinGeckoAPI {
       
       const data = await makeRequest(url);
       
-      const formattedData = data.prices.map((price: [number, number], index: number) => ({
+      const formattedData = (data as { prices: [number, number][]; market_caps: [number, number][]; total_volumes: [number, number][] }).prices.map((price: [number, number], index: number) => ({
         timestamp: price[0],
         date: new Date(price[0]).toISOString().split('T')[0],
         price: price[1].toFixed(6),
-        market_cap: data.market_caps[index] ? data.market_caps[index][1] : null,
-        volume: data.total_volumes[index] ? data.total_volumes[index][1] : null
+        market_cap: (data as { market_caps: [number, number][] }).market_caps[index] ? (data as { market_caps: [number, number][] }).market_caps[index][1] : undefined,
+        volume: (data as { total_volumes: [number, number][] }).total_volumes[index] ? (data as { total_volumes: [number, number][] }).total_volumes[index][1] : undefined
       }));
       
       return formattedData;
@@ -75,12 +88,12 @@ export class CoinGeckoAPI {
       
       const data = await makeRequest(url);
       
-      return data.prices.map((price: [number, number], index: number) => ({
+      return (data as { prices: [number, number][]; market_caps: [number, number][]; total_volumes: [number, number][] }).prices.map((price: [number, number], index: number) => ({
         timestamp: price[0],
         date: new Date(price[0]).toISOString().split('T')[0],
         price: price[1].toFixed(6),
-        market_cap: data.market_caps[index] ? data.market_caps[index][1] : null,
-        volume: data.total_volumes[index] ? data.total_volumes[index][1] : null
+        market_cap: (data as { market_caps: [number, number][] }).market_caps[index] ? (data as { market_caps: [number, number][] }).market_caps[index][1] : undefined,
+        volume: (data as { total_volumes: [number, number][] }).total_volumes[index] ? (data as { total_volumes: [number, number][] }).total_volumes[index][1] : undefined
       }));
     } catch (error) {
       console.error('❌ CoinGecko Range API Error:', error);
@@ -118,8 +131,8 @@ export class CoinMarketCapAPI {
 
       const data = await makeRequest(url, headers);
       
-      const quotes = data.data.quotes;
-      return quotes.map((quote: any) => ({
+      const quotes = (data as { data: { quotes: CoinMarketCapQuote[] } }).data.quotes;
+      return quotes.map((quote: CoinMarketCapQuote) => ({
         timestamp: new Date(quote.timestamp).getTime(),
         date: quote.timestamp.split('T')[0],
         price: quote.quote.USD.price.toFixed(6),
@@ -133,7 +146,7 @@ export class CoinMarketCapAPI {
     }
   }
 
-  async getCurrentQuote(symbol: string): Promise<any> {
+  async getCurrentQuote(symbol: string): Promise<CoinMarketCapQuote> {
     try {
       const params = new URLSearchParams({
         symbol: symbol.toUpperCase(),
@@ -149,7 +162,7 @@ export class CoinMarketCapAPI {
       };
 
       const data = await makeRequest(url, headers);
-      return data.data[symbol.toUpperCase()];
+      return (data as { data: Record<string, CoinMarketCapQuote> }).data[symbol.toUpperCase()];
     } catch (error) {
       console.error('❌ CoinMarketCap Current Quote Error:', error);
       throw error;
@@ -171,12 +184,12 @@ export class CryptoCompareAPI {
       const priceData = await makeRequest(priceUrl);
       console.log('CryptoCompare price data:', priceData);
       
-      if (!priceData || !priceData[toSymbol]) {
+      if (!priceData || !(priceData as Record<string, number>)[toSymbol]) {
         throw new Error('No price data received from CryptoCompare');
       }
 
       // Generate historical data based on current price since historical endpoint has CORS issues
-      const currentPrice = priceData[toSymbol];
+      const currentPrice = (priceData as Record<string, number>)[toSymbol];
       const data: CryptoData[] = [];
       const now = new Date();
       
@@ -250,11 +263,11 @@ export class CryptoCompareAPI {
       
       const priceData = await makeRequest(priceUrl);
       
-      if (!priceData || !priceData[toSymbol]) {
+      if (!priceData || !(priceData as Record<string, number>)[toSymbol]) {
         throw new Error('No price data received from CryptoCompare');
       }
 
-      const currentPrice = priceData[toSymbol];
+      const currentPrice = (priceData as Record<string, number>)[toSymbol];
       const data: CryptoData[] = [];
       const now = new Date();
       

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,8 +8,8 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Alert } from "@/components/ui/alert";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { TrendingUp, TrendingDown, Brain, Target, AlertTriangle, CheckCircle, Zap, Shield, Globe, RefreshCw, DollarSign, BarChart3, Activity, Settings, Key } from "lucide-react";
-import { fetchCryptoData, generateMockData, type CryptoData, type APIResponse, TOKEN_ID_MAP, testCryptoCompareAPI } from "@/lib/crypto-apis";
+import { Target, AlertTriangle, RefreshCw, BarChart3, Settings, Key } from "lucide-react";
+import { fetchCryptoData, generateMockData, type CryptoData, type APIResponse, testCryptoCompareAPI } from "@/lib/crypto-apis";
 
 export default function TryPage() {
   const [tokenSymbol, setTokenSymbol] = useState('BTC');
@@ -29,7 +29,7 @@ export default function TryPage() {
   const [showApiSettings, setShowApiSettings] = useState(false);
 
   // Real API function
-  const fetchRealCryptoData = async () => {
+  const fetchRealCryptoData = useCallback(async () => {
     setIsLoading(true);
     setError(null);
     
@@ -38,7 +38,7 @@ export default function TryPage() {
       
       // Filter out empty API keys
       const validApiKeys = Object.fromEntries(
-        Object.entries(apiKeys).filter(([_, value]) => value.trim() !== '')
+        Object.entries(apiKeys).filter(([, value]) => value.trim() !== '')
       );
       
       const data = await fetchCryptoData(tokenSymbol, days, validApiKeys);
@@ -49,10 +49,10 @@ export default function TryPage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [tokenSymbol, days, apiKeys]);
 
   // Mock API function (fallback)
-  const fetchMockCryptoData = async () => {
+  const fetchMockCryptoData = useCallback(async () => {
     setIsLoading(true);
     setError(null);
     
@@ -79,11 +79,12 @@ export default function TryPage() {
       
       setCryptoData(mockData);
     } catch (err) {
+      console.error('Mock data generation failed:', err);
       setError('Failed to generate mock data');
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [tokenSymbol, days]);
 
   const getBasePriceForToken = (token: string): number => {
     const priceMap: Record<string, number> = {
@@ -181,7 +182,7 @@ export default function TryPage() {
     } else {
       fetchMockCryptoData();
     }
-  }, []);
+  }, [useRealAPIs, fetchRealCryptoData, fetchMockCryptoData]);
 
   return (
     <div className="min-h-screen p-4" style={{ backgroundColor: '#C6FC7B' }}>
@@ -338,7 +339,7 @@ export default function TryPage() {
                 
                 if (Array.isArray(data) && data.length > 0) {
                   const latest = getLatestPrice(data);
-                  const { change, percentChange } = getPriceChange(data);
+                  const { percentChange } = getPriceChange(data);
                   
                   return (
                     <Card key={apiName} style={{ backgroundColor: '#6603BF', borderColor: '#C6FC7B' }}>

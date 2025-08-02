@@ -12,7 +12,7 @@ export default function Lending() {
             1inch Lending — DeFi Lending Revolution
           </h1>
           <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
-            Borrow against your crypto assets or lend to earn yield. Access liquidity across multiple DEXes with 1inch's advanced lending protocols.
+            Borrow against your crypto assets or lend to earn yield. Access liquidity across multiple DEXes with 1inch&apos;s advanced lending protocols.
           </p>
           
           {/* CTA Buttons */}

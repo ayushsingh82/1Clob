@@ -73,7 +73,7 @@ export default function Home() {
                   Market Analysis
                 </h3>
                 <p className="text-md leading-relaxed" style={{ color: '#C6FC7B' }}>
-                  Interactive 1inch CLOB API explorer with real-time orderbook data, limit order management, and market depth analysis. Test and integrate with 1inch's Central Limit Order Book APIs directly.
+                  Interactive 1inch CLOB API explorer with real-time orderbook data, limit order management, and market depth analysis. Test and integrate with 1inch&apos;s Central Limit Order Book APIs directly.
                 </p>
               </div>
             </div>
